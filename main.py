@@ -105,10 +105,16 @@ def main():
         
         # Handle web functionality or use local path
         if choice == "web":
+            if not web_url:
+                print("Error: No URL provided")
+                return
             print(f"Attempting to download from: {web_url}")
             image_path = download_web_image(web_url)
             downloaded_file = True  # Track if we downloaded the file
         else:
+            if not local_path:
+                print("Error: No local path provided")
+                return
             image_path = local_path
             downloaded_file = False  # Don't delete user's local files
             
@@ -122,7 +128,7 @@ def main():
         success = set_wallpaper(image_path)
         
         # Delete downloaded image after setting wallpaper (only for web downloads)
-        if success and downloaded_file:
+        if success and downloaded_file and image_path:
             try:
                 print(f"Deleting downloaded file: {image_path}")
                 os.remove(image_path)
